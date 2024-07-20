@@ -5,6 +5,7 @@
 package Clases;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,7 +38,7 @@ public class MetodosTienda {
         for (Computadora c : computadoras) {
             if (isCodigo(cod, computadoras)) {
                 computadoras.remove(c);
-                System.out.println("Se elimino con exito");
+                JOptionPane.showMessageDialog(null, "Se elimino cone exito","mensaje",JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
