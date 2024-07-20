@@ -44,12 +44,14 @@ public class MetodosTienda {
     }
 
     public void eliminarComputadoraTienda(int cod, List<Computadora> computadoras) {
+
         for (Computadora c : computadoras) {
-            if (isCodigo(cod, computadoras)) {
+            if (c.getCodComputadora() == cod) {
                 computadoras.remove(c);
-                JOptionPane.showMessageDialog(null, "Se elimino cone exito", "mensaje", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "ELIMINADO EXITOSAMENTE");
                 serializarLista(computadoras);
                 return;
+
             }
 
         }
@@ -58,7 +60,7 @@ public class MetodosTienda {
 
     public void modificarPrecioComputador(int cod, List<Computadora> compus, double precio) {
         for (Computadora c : compus) {
-            if (isCodigo(cod, compus)) {
+            if (cod == c.getCodComputadora()) {
                 c.setPrecio(precio);
                 System.out.println("Modificacion exitosa");
                 serializarLista(compus);
@@ -71,7 +73,7 @@ public class MetodosTienda {
 
     public void modificarSO(String sistemaOperativo, List<Computadora> compus, int cod) {
         for (Computadora c : compus) {
-            if (isCodigo(cod, compus)) {
+            if (cod == c.getCodComputadora()) {
                 c.setSistemaOperativo(sistemaOperativo);
                 System.out.println("Modificacion exitosa");
                 serializarLista(compus);
@@ -84,7 +86,7 @@ public class MetodosTienda {
 
     public void modificarDescuento(int cod, List<Computadora> compus, double descuento) {
         for (Computadora c : compus) {
-            if (isCodigo(cod, compus)) {
+            if (cod == c.getCodComputadora()) {
                 c.setDescuento(descuento);
                 System.out.println("Modificacion exitosa");
                 serializarLista(compus);
