@@ -80,6 +80,13 @@ public class MetodosTienda {
         }
         
     }
+    public void serializarLista(List<Computadora> compus){
+        
+    }
+    public List<Computadora> deserializarLista(){
+        return null;
+        
+    }
 
     public void mostrarDatos(List<Computadora> compus) {
         for (Computadora c : compus) {
