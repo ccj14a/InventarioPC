@@ -4,6 +4,12 @@
  */
 package Clases;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -12,6 +18,8 @@ import javax.swing.JOptionPane;
  * @author ALE
  */
 public class MetodosTienda {
+
+    final static String ARCHIVO = "archivo";
 
     //metodos para aregar cumputadoras a la tienda
     public boolean isCodigo(int cod, List<Computadora> computadoras) {
@@ -30,7 +38,8 @@ public class MetodosTienda {
             return;
         }
         computadoras.add(computador);
-        System.out.println("Se agrego con exito el computador");
+        serializarLista(computadoras);
+        System.out.println("Se guardo con éxito el computador");
 
     }
 
@@ -38,12 +47,12 @@ public class MetodosTienda {
         for (Computadora c : computadoras) {
             if (isCodigo(cod, computadoras)) {
                 computadoras.remove(c);
-                JOptionPane.showMessageDialog(null, "Se elimino cone exito","mensaje",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Se elimino cone exito", "mensaje", JOptionPane.INFORMATION_MESSAGE);
+                serializarLista(computadoras);
                 return;
             }
 
         }
-       
 
     }
 
@@ -52,40 +61,62 @@ public class MetodosTienda {
             if (isCodigo(cod, compus)) {
                 c.setPrecio(precio);
                 System.out.println("Modificacion exitosa");
+                serializarLista(compus);
                 return;
 
             }
         }
 
     }
-    public void modificarSO(String sistemaOperativo, List<Computadora> compus, int cod){
+
+    public void modificarSO(String sistemaOperativo, List<Computadora> compus, int cod) {
         for (Computadora c : compus) {
             if (isCodigo(cod, compus)) {
                 c.setSistemaOperativo(sistemaOperativo);
                 System.out.println("Modificacion exitosa");
+                serializarLista(compus);
                 return;
 
             }
         }
-        
+
     }
-    public void modificarDescuento(int cod, List<Computadora> compus, double descuento){
-          for (Computadora c : compus) {
+
+    public void modificarDescuento(int cod, List<Computadora> compus, double descuento) {
+        for (Computadora c : compus) {
             if (isCodigo(cod, compus)) {
                 c.setDescuento(descuento);
                 System.out.println("Modificacion exitosa");
+                serializarLista(compus);
                 return;
 
             }
         }
-        
+
     }
-    public void serializarLista(List<Computadora> compus){
-        
+
+    public void serializarLista(List<Computadora> compus) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(ARCHIVO))) {
+            out.writeObject(compus);
+            //System.out.println("Se agregó con exito el computador");
+
+        } catch (IOException x) {
+            System.out.println("ERROR: " + x.getMessage());
+        }
+
     }
-    public List<Computadora> deserializarLista(){
-        return null;
-        
+
+    public List<Computadora> deserializarLista() {
+        List<Computadora> compus = new ArrayList<>();
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(ARCHIVO))) {
+            compus = (List<Computadora>) in.readObject();
+
+        } catch (IOException | ClassNotFoundException x) {
+            System.out.println("ERROR: " + x.getMessage());
+
+        }
+        return compus;
+
     }
 
     public void mostrarDatos(List<Computadora> compus) {
@@ -105,10 +136,11 @@ public class MetodosTienda {
         }
 
     }
-    public void mostrarCodigos(List<Computadora> compus){
+
+    public void mostrarCodigos(List<Computadora> compus) {
         System.out.println("CODIGOS REGISTRADOS:");
-        for(Computadora c:compus){
-            System.out.println("cod: "+ c.getCodComputadora());
+        for (Computadora c : compus) {
+            System.out.println("cod: " + c.getCodComputadora());
         }
     }
 

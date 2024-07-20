@@ -4,11 +4,13 @@
  */
 package Clases;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ALE
  */
-public class Computadora {
+public class Computadora implements Serializable{
 
     private int codComputadora;
     private double precio;

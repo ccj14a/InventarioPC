@@ -106,7 +106,8 @@ public class Principal {
         int op1, op2;
         MetodosTienda mt = new MetodosTienda();
         System.out.println("Este es un menaje nuevo");
-        List<Computadora> compus = new ArrayList<>();
+        //List<Computadora> cargarData = mt.deserializarLista();
+        List<Computadora> compus = new ArrayList<>(mt.deserializarLista());
         Tienda t = new Tienda();
         do {
             op1 = Menus.menuTienda();
