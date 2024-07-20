@@ -105,6 +105,7 @@ public class Principal {
     public static void main(String[] args) throws IOException {
         int op1, op2;
         MetodosTienda mt = new MetodosTienda();
+        System.out.println("Este es un menaje nuevo");
         List<Computadora> compus = new ArrayList<>();
         Tienda t = new Tienda();
         do {
