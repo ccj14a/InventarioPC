@@ -54,18 +54,21 @@ public class Menus {
 
     public static int menuModificacionCampos() {
         int opRetornar = -1;
-        System.out.println(MENU_MODIFICAR);
+        String input;
         try {
             while (true) {
-                System.out.println("Coloca una opcion entera(1-5): ");
-                opRetornar = Integer.parseInt(entrada.readLine());
+                input = JOptionPane.showInputDialog(null, MENU_MODIFICAR + "\t" + "Coloca una opcion entera(1-5):","menu de modificacion", JOptionPane.INFORMATION_MESSAGE);
+                if (input == null) {
+                    System.exit(0);
+                }
+                opRetornar = Integer.parseInt(input);
                 if (opRetornar >= 1 && opRetornar <= 5) {
                     break;
                 }
-                System.out.println("Opcion fuera de rango");
+               JOptionPane.showMessageDialog(null, "Opcion fuera de rango","ERROR",JOptionPane.ERROR_MESSAGE);
             }
 
-        } catch (IOException | NumberFormatException e) {
+        } catch (NumberFormatException e) {
             System.out.println("Formato invalido: " + e.getMessage());
         }
         return opRetornar;
