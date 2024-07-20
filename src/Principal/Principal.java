@@ -141,21 +141,22 @@ public class Principal {
                     if (mt.isCodigo(cod, compus)) {
                         System.out.println("COMPUTADORA ACTUAL");
                         mt.mostrarPorCodigo(cod, compus);
+                        boolean estado = false;
                         do {
 
                             op2 = Menus.menuModificacionCampos();
 
                             switch (op2) {
                                 case 1:
-                                    mt.modificarSO(nSO(), compus, cod);
+                                    estado = mt.modificarSO(nSO(), compus, cod);
                                     break;
                                 case 2:
 
-                                    mt.modificarPrecioComputador(cod, compus, precio());
+                                    estado = mt.modificarPrecioComputador(cod, compus, precio());
                                     break;
                                 case 3:
 
-                                    mt.modificarDescuento(cod, compus, nD());
+                                    estado = mt.modificarDescuento(cod, compus, nD());
                                     break;
                                 case 4:
                                     String r;
@@ -170,8 +171,10 @@ public class Principal {
                             if (op2 == 5) {
                                 break;
                             }
-                            System.out.println("COMPUTADORA LUEGO DE LAS ACTUALIZACIONES");
-                            mt.mostrarPorCodigo(cod, compus);
+                            if (estado) {
+                                System.out.println("COMPUTADORA LUEGO DE LAS ACTUALIZACIONES");
+                                mt.mostrarPorCodigo(cod, compus);
+                            }
 
                         } while (op2 != 5);
 

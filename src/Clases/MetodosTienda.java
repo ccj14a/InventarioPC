@@ -54,63 +54,66 @@ public class MetodosTienda {
 
     }
 
-    public void modificarPrecioComputador(int cod, List<Computadora> compus, double precio) {
+    public boolean modificarPrecioComputador(int cod, List<Computadora> compus, double precio) {
         if (precio == -1) {
-            return;
+            return false;
         }
         if (precio < -1) {
             JOptionPane.showMessageDialog(null, "NO SE ACEPTA VALORES NEGATIVOS");
-            return;
+            return false;
         }
         for (Computadora c : compus) {
             if (cod == c.getCodComputadora()) {
                 c.setPrecio(precio);
                 JOptionPane.showMessageDialog(null, "Modificacion exitosa", "MODIFICACION", JOptionPane.INFORMATION_MESSAGE);
                 serializarLista(compus);
-                return;
+                return true;
 
             }
         }
+        return false; //si no encuentra la compu 
 
     }
 
-    public void modificarSO(String sistemaOperativo, List<Computadora> compus, int cod) {
+    public boolean modificarSO(String sistemaOperativo, List<Computadora> compus, int cod) {
         for (Computadora c : compus) {
             if (cod == c.getCodComputadora()) {
                 c.setSistemaOperativo(sistemaOperativo);
                 JOptionPane.showMessageDialog(null, "Modificacion exitosa", "MODIFICACION", JOptionPane.INFORMATION_MESSAGE);
                 serializarLista(compus);
-                return;
+                return true;
 
             }
         }
+        return false;//si no encuentra la compu 
 
     }
 
-    public void modificarDescuento(int cod, List<Computadora> compus, double descuento) {
+    public boolean modificarDescuento(int cod, List<Computadora> compus, double descuento) {
          if (descuento == -1) {
-            return;
+            return false;
         }
         if (descuento < -1) {
             JOptionPane.showMessageDialog(null, "NO SE ACEPTA VALORES NEGATIVOS");
-            return;
+            return false;
         }
         for (Computadora c : compus) {
             if (cod == c.getCodComputadora()) {
                 c.setDescuento(descuento);
                 JOptionPane.showMessageDialog(null, "Modificacion exitosa", "MODIFICACION", JOptionPane.INFORMATION_MESSAGE);
                 serializarLista(compus);
-                return;
+                return true;
 
             }
         }
+        return false; //si no encuentra la compu 
 
     }
 
     public void serializarLista(List<Computadora> compus) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(ARCHIVO))) {
             out.writeObject(compus);
-            //System.out.println("Se agregó con exito el computador");
+           
 
         } catch (IOException x) {
             JOptionPane.showMessageDialog(null, "ERROR", "ERROR", JOptionPane.ERROR_MESSAGE);
