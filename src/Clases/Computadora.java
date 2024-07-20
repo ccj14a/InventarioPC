@@ -58,8 +58,7 @@ public class Computadora implements Serializable{
     }
 
     public double precioFinal() {
-        this.precio = this.precio - descuento;
-        return precio;
+        return precio-descuento;
 
     }
 

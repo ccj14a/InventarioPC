@@ -20,7 +20,7 @@ public class Tienda {
 
     @Override
     public String toString() {
-        return "Tienda{" + "nombreTienda=" + nombre_Tienda + ", direccion=" + direccion + '}';
+        return "" + "nombreTienda=" + nombre_Tienda + ", direccion=" + direccion + '+';
     }
 
 }

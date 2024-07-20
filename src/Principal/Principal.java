@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,36 +29,46 @@ public class Principal {
         double precio;
         double descu;
         String so = "";
-        System.out.print("Codigo computadora:");
         try {
-            cod = Integer.parseInt(entrada.readLine());
-            if (met.isCodigo(cod, compus)) {
-                System.out.println("el codigo " + cod + " ya existe");
+            String iC = JOptionPane.showInputDialog(null, "Codigo de la computadora:", "CODIGO", JOptionPane.QUESTION_MESSAGE);
+            if (iC == null) {
                 return;
             }
-        } catch (IOException | NumberFormatException ex) {
-            System.out.println("ERROR");
+            cod = Integer.parseInt(iC);
+            if (met.isCodigo(cod, compus)) {
+                JOptionPane.showMessageDialog(null, "El codigo " + cod + " ya existe", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Error", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        System.out.print("precio: ");
+
         try {
-            precio = Double.parseDouble(entrada.readLine());
-        } catch (IOException | NumberFormatException ex) {
-            System.out.println("ERROR");
+            String iP = JOptionPane.showInputDialog(null, "Precio: ", "PRECIO", JOptionPane.QUESTION_MESSAGE);
+            if (iP == null) {
+                return;
+            }
+            precio = Double.parseDouble(iP);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Error", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        System.out.print("Descuento:");
+
         try {
-            descu = Double.parseDouble(entrada.readLine());
-        } catch (IOException | NumberFormatException ex) {
-            System.out.println("ERROR");
+            String inputD = JOptionPane.showInputDialog(null, "Descuento:", "Descuento", JOptionPane.QUESTION_MESSAGE);
+            if (inputD == null) {
+                return;
+            }
+            descu = Double.parseDouble(inputD);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Error", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        System.out.print("Sistema operativo:");
-        try {
-            so = entrada.readLine();
-        } catch (IOException ex) {
-            System.out.println("ERROR");
+
+        so = JOptionPane.showInputDialog("Sistema operativo:");
+        if (so == null) {
+            return;
         }
         Computadora c = new Computadora(cod, precio, so, descu);
         met.agregarComputadoraTienda(c, compus);
@@ -65,15 +76,12 @@ public class Principal {
 
     public static double precio() {
         double precio;
-
-        System.out.print("precio:");
         try {
-            precio = Double.parseDouble(entrada.readLine());
+            precio = Double.parseDouble(JOptionPane.showInputDialog(null, "Precio:", "PRECIO", JOptionPane.QUESTION_MESSAGE));
             return precio;
-        } catch (IOException ex) {
-            System.out.println("ERROR");
-        
-            return 0;
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "ERROR");
+            return -1;
 
         }
 
@@ -81,25 +89,20 @@ public class Principal {
 
     public static String nSO() {
         String so;
-        System.out.print("sistema operativo:");
-        try {
-            so = entrada.readLine();
-            return so;
-        } catch (IOException ex) {
-            System.out.println("ERROR");
-            return null;
-        }
+        so = JOptionPane.showInputDialog(null, "Sistema operativo:");
+        return so;
+
     }
 
     public static double nD() {
         double desc;
-        System.out.print("descuento:");
+
         try {
-            desc = Double.parseDouble(entrada.readLine());
+            desc = Double.parseDouble(JOptionPane.showInputDialog(null, "Descuento: ", "Descuento", JOptionPane.QUESTION_MESSAGE));
             return desc;
-        } catch (IOException ex) {
-            System.out.println("ERROR");
-            return 0;
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "ERROR");
+            return -1;
         }
     }
 
@@ -114,56 +117,67 @@ public class Principal {
             op1 = Menus.menuTienda();
             switch (op1) {
                 case 1:
-                    System.out.println(t);
+                    JOptionPane.showMessageDialog(null, t, "DATOS TIENDA", JOptionPane.INFORMATION_MESSAGE);
                     break;
                 case 2:
-                    System.out.println(t);
+
                     datosComputadora(compus);
 
                     break;
                 case 3:
                     if (compus.isEmpty()) {
-                        System.out.println("No hay computadoras registradas en " + Tienda.nombre_Tienda);
+                        JOptionPane.showMessageDialog(null, "No hay computadoras registradas en " + Tienda.nombre_Tienda, "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                         break;
                     }
-                    System.out.println("COMPUTADORAS REGISTRADAS");
-                    System.out.println(Tienda.nombre_Tienda);
+
                     mt.mostrarDatos(compus);
 
                     break;
                 case 4:
-                    mt.mostrarCodigos(compus);
-                    System.out.println("Buscar x codigo: ");
-                    int cod = Integer.parseInt(entrada.readLine());
+                    StringBuilder s = mt.mostrarCodigos(compus);
+                    s.append("\nColoca el codigo:");
+                    int cod = Integer.parseInt(JOptionPane.showInputDialog(null, s, "CODIGO", JOptionPane.INFORMATION_MESSAGE));
+
                     if (mt.isCodigo(cod, compus)) {
+                        System.out.println("COMPUTADORA ACTUAL");
                         mt.mostrarPorCodigo(cod, compus);
                         do {
+
                             op2 = Menus.menuModificacionCampos();
+
                             switch (op2) {
                                 case 1:
                                     mt.modificarSO(nSO(), compus, cod);
                                     break;
                                 case 2:
+
                                     mt.modificarPrecioComputador(cod, compus, precio());
                                     break;
                                 case 3:
+
                                     mt.modificarDescuento(cod, compus, nD());
                                     break;
                                 case 4:
                                     String r;
-                                    System.out.print("Estas seguro que quieres eliminar no hay vuelta atras(S/N):");
-                                    r = entrada.readLine();
+                                    r = JOptionPane.showInputDialog(null, "Estas seguro que quieres eliminar no hay vuelta atras(S/N):");
                                     if (r.equals("S") || r.equals("s")) {
                                         mt.eliminarComputadoraTienda(cod, compus);
 
                                     }
                                     break;
+
                             }
+                            if (op2 == 5) {
+                                break;
+                            }
+                            System.out.println("COMPUTADORA LUEGO DE LAS ACTUALIZACIONES");
+                            mt.mostrarPorCodigo(cod, compus);
+
                         } while (op2 != 5);
 
                         break;
                     } else {
-                        System.out.println("el codigo no existe");
+                        JOptionPane.showMessageDialog(null, "El codigo no existe", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                     }
                     break;
 

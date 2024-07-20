@@ -12,10 +12,10 @@ public class Menus {
 
     private static final String MENU_TIENDA = """
                                               MENU TIENDA
-                                              1.DatosTienda
-                                              2.AgregarComputadoras
-                                              3.RegistroComputadoras
-                                              4.ModificarComputador
+                                              1.Datos Tienda
+                                              2.Registrar Computador
+                                              3.Ver registro de Computadoras
+                                              4.Modificar Computador
                                               5.Salir
                                               """;
     private static final String MENU_MODIFICAR = """
@@ -35,7 +35,7 @@ public class Menus {
             while (true) {
                 input = JOptionPane.showInputDialog(MENU_TIENDA + "\nColoca una opcion en el rango:");
                 if (input == null) {
-                    System.exit(0);
+                    System.exit(0);//para salir del programa
                 }
                 opRetornar = Integer.parseInt(input);
 
@@ -59,7 +59,7 @@ public class Menus {
             while (true) {
                 input = JOptionPane.showInputDialog(null, MENU_MODIFICAR + "\t" + "Coloca una opcion entera(1-5):","menu de modificacion", JOptionPane.INFORMATION_MESSAGE);
                 if (input == null) {
-                    System.exit(0);
+                    return 5; //para volver al menu principal
                 }
                 opRetornar = Integer.parseInt(input);
                 if (opRetornar >= 1 && opRetornar <= 5) {

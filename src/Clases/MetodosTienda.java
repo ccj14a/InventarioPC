@@ -13,13 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author ALE
- */
 public class MetodosTienda {
 
-    final static String ARCHIVO = "archivo";
+    final static String ARCHIVO = "archivo.ser";
 
     //metodos para aregar cumputadoras a la tienda
     public boolean isCodigo(int cod, List<Computadora> computadoras) {
@@ -39,7 +35,7 @@ public class MetodosTienda {
         }
         computadoras.add(computador);
         serializarLista(computadoras);
-        System.out.println("Se guardo con éxito el computador");
+        JOptionPane.showMessageDialog(null, "Se guardo con éxito el computador", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
@@ -59,10 +55,17 @@ public class MetodosTienda {
     }
 
     public void modificarPrecioComputador(int cod, List<Computadora> compus, double precio) {
+        if (precio == -1) {
+            return;
+        }
+        if (precio < -1) {
+            JOptionPane.showMessageDialog(null, "NO SE ACEPTA VALORES NEGATIVOS");
+            return;
+        }
         for (Computadora c : compus) {
             if (cod == c.getCodComputadora()) {
                 c.setPrecio(precio);
-                System.out.println("Modificacion exitosa");
+                JOptionPane.showMessageDialog(null, "Modificacion exitosa", "MODIFICACION", JOptionPane.INFORMATION_MESSAGE);
                 serializarLista(compus);
                 return;
 
@@ -75,7 +78,7 @@ public class MetodosTienda {
         for (Computadora c : compus) {
             if (cod == c.getCodComputadora()) {
                 c.setSistemaOperativo(sistemaOperativo);
-                System.out.println("Modificacion exitosa");
+                JOptionPane.showMessageDialog(null, "Modificacion exitosa", "MODIFICACION", JOptionPane.INFORMATION_MESSAGE);
                 serializarLista(compus);
                 return;
 
@@ -85,10 +88,17 @@ public class MetodosTienda {
     }
 
     public void modificarDescuento(int cod, List<Computadora> compus, double descuento) {
+         if (descuento == -1) {
+            return;
+        }
+        if (descuento < -1) {
+            JOptionPane.showMessageDialog(null, "NO SE ACEPTA VALORES NEGATIVOS");
+            return;
+        }
         for (Computadora c : compus) {
             if (cod == c.getCodComputadora()) {
                 c.setDescuento(descuento);
-                System.out.println("Modificacion exitosa");
+                JOptionPane.showMessageDialog(null, "Modificacion exitosa", "MODIFICACION", JOptionPane.INFORMATION_MESSAGE);
                 serializarLista(compus);
                 return;
 
@@ -103,7 +113,7 @@ public class MetodosTienda {
             //System.out.println("Se agregó con exito el computador");
 
         } catch (IOException x) {
-            System.out.println("ERROR: " + x.getMessage());
+            JOptionPane.showMessageDialog(null, "ERROR", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -114,18 +124,20 @@ public class MetodosTienda {
             compus = (List<Computadora>) in.readObject();
 
         } catch (IOException | ClassNotFoundException x) {
-            System.out.println("ERROR: " + x.getMessage());
-
+            JOptionPane.showMessageDialog(null, "ERROR", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return compus;
 
     }
 
     public void mostrarDatos(List<Computadora> compus) {
+        StringBuilder s = new StringBuilder();
+
         for (Computadora c : compus) {
-            System.out.println(c);
-            System.out.println("------------------------------------------------------------------------------------------------------");
+            s.append(c).append("\n");
+
         }
+        JOptionPane.showMessageDialog(null, s, "Computadoras registradas en: " + Tienda.nombre_Tienda, JOptionPane.INFORMATION_MESSAGE);
 
     }
 
@@ -139,11 +151,14 @@ public class MetodosTienda {
 
     }
 
-    public void mostrarCodigos(List<Computadora> compus) {
-        System.out.println("CODIGOS REGISTRADOS:");
+    public StringBuilder mostrarCodigos(List<Computadora> compus) {
+        StringBuilder s = new StringBuilder();
+        s.append("CODIGOS REGISTRADOS").append("\n");
         for (Computadora c : compus) {
-            System.out.println("cod: " + c.getCodComputadora());
+            s.append("cod ").append(c.getCodComputadora()).append("\n");
         }
+        return s;
+
     }
 
 }
