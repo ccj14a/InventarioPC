@@ -72,6 +72,7 @@ public class Principal {
             return precio;
         } catch (IOException ex) {
             System.out.println("ERROR");
+        
             return 0;
 
         }
@@ -105,7 +106,7 @@ public class Principal {
     public static void main(String[] args) throws IOException {
         int op1, op2;
         MetodosTienda mt = new MetodosTienda();
-        System.out.println("Este es un menaje nuevo");
+        //System.out.println("Este es un menaje nuevo");
         //List<Computadora> cargarData = mt.deserializarLista();
         List<Computadora> compus = new ArrayList<>(mt.deserializarLista());
         Tienda t = new Tienda();
