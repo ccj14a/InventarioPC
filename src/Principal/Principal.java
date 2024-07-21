@@ -151,11 +151,9 @@ public class Principal {
                                     estado = mt.modificarSO(nSO(), compus, cod);
                                     break;
                                 case 2:
-
                                     estado = mt.modificarPrecioComputador(cod, compus, precio());
                                     break;
                                 case 3:
-
                                     estado = mt.modificarDescuento(cod, compus, nD());
                                     break;
                                 case 4:
